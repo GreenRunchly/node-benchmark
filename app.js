@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const dayjs = require('dayjs');
 
 const app = express();
-const appPath = process.env.HTTP_PATH;
+const apiPath = process.env.API_PATH;
 
 // Agar saat crash web tidak shutdown
 app.on('uncaughtException', function (err) {
@@ -55,8 +55,8 @@ function intensiveRandomCalculation(iterations) {
 }
 
 // Rute-rute aplikasi
-app.get(appPath + '/', (req, res) => {
-    const counts = intensiveRandomCalculation(1_000_000);
+app.get(apiPath + '/', (req, res) => {
+    const counts = intensiveRandomCalculation(1_000_00);
     res.json({
         code: "ok",
         msg: "Selamat Datang!",
@@ -65,7 +65,7 @@ app.get(appPath + '/', (req, res) => {
 });
 
 // Menangani permintaan API yang tidak valid
-app.all(appPath + '/*', (req, res) => {
+app.all(apiPath + '/*', (req, res) => {
     res.status(404).json({
         code: "error",
         msg: "API Invalid"
@@ -75,5 +75,5 @@ app.all(appPath + '/*', (req, res) => {
 // Menjalankan server
 const port = process.env.HTTP_PORT || 3000;
 app.listen(port, () => {
-    console.log(`[${dayjs().format('YYYY-MM-DD HH:mm:ss')}] Server berjalan pada port ${port}... HTTP Route Addon disetel ke ${appPath}`);
+    console.log(`[${dayjs().format('YYYY-MM-DD HH:mm:ss')}] Server berjalan pada port ${port}... HTTP Route Addon disetel ke ${apiPath}`);
 });
